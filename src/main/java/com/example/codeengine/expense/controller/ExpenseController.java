@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class ExpenseController {
     private ExpenseRepository expenseRepository;
