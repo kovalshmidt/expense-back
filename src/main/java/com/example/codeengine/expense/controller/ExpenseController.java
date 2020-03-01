@@ -42,7 +42,7 @@ public class ExpenseController {
         return ResponseEntity.created(new URI("/api/expenses/" + result.getId())).body(result);
     }
 
-    @PutMapping("/expense/{id}")
+    @PutMapping("/expense")
     public ResponseEntity<Expense> updateExpense(@Valid @RequestBody Expense expense) {
         Expense result = expenseRepository.save(expense);
         return ResponseEntity.ok().body(result);

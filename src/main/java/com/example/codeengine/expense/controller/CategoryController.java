@@ -42,7 +42,7 @@ public class CategoryController {
         return ResponseEntity.created(new URI("/api/category/" + result.getId())).body(result);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/category")
     public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category) {
         Category result = categoryRepository.save(category);
         return ResponseEntity.ok().body(result);
