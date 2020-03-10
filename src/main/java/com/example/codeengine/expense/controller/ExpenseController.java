@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -30,8 +31,8 @@ public class ExpenseController {
     }
 
     @GetMapping("/expense/{id}")
-    public ResponseEntity getExpense(@PathVariable("id") Long id) {
-        Optional<Expense> expense = expenseRepository.findById(id);
+    public ResponseEntity getExpense(@PathVariable("id") String id) {
+        Optional<Expense> expense = expenseRepository.findById(UUID.fromString(id));
         return expense.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -49,8 +50,8 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/expense/{id}")
-    public ResponseEntity<?> deleteExpense(@PathVariable Long id) {
-        expenseRepository.deleteById(id);
+    public ResponseEntity<?> deleteExpense(@PathVariable String id) {
+        expenseRepository.deleteById(UUID.fromString(id));
         return ResponseEntity.ok().build();
     }
 }
