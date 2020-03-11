@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +22,7 @@ public class Expense {
     @Column(columnDefinition = "BINARY(16)")
     @GeneratedValue
     private UUID id;
-    private Instant expenseDate;
+    private LocalDateTime expenseDate;
     private String description;
     private String location;
     @JsonIgnore

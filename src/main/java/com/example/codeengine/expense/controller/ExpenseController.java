@@ -1,6 +1,8 @@
 package com.example.codeengine.expense.controller;
 
+import com.example.codeengine.expense.Mapper.Mapper;
 import com.example.codeengine.expense.model.Expense;
+import com.example.codeengine.expense.model.ExpenseViewModel;
 import com.example.codeengine.expense.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,12 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class ExpenseController {
     private ExpenseRepository expenseRepository;
+    private Mapper mapper;
 
     @Autowired
-    public ExpenseController(ExpenseRepository expenseRepository) {
+    public ExpenseController(ExpenseRepository expenseRepository, Mapper mapper) {
         this.expenseRepository = expenseRepository;
+        this.mapper = mapper;
     }
 
     @GetMapping("/expenses")
@@ -38,7 +42,8 @@ public class ExpenseController {
     }
 
     @PostMapping("/expense")
-    public ResponseEntity<Expense> expense(@Valid @RequestBody Expense expense) throws URISyntaxException {
+    public ResponseEntity<Expense> expense(@Valid @RequestBody ExpenseViewModel expenseViewModel) throws URISyntaxException {
+        Expense expense = mapper.convertToExpenseEntity(expenseViewModel);
         Expense result = expenseRepository.save(expense);
         return ResponseEntity.created(new URI("/api/expenses/" + result.getId())).body(result);
     }

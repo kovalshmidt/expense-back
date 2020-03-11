@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * This component will only execute (and get instantiated) if the
@@ -60,7 +62,7 @@ public class DBSeeder implements CommandLineRunner {
         expense.setCategory(category);
         expense.setDescription("New York Business trip");
         expense.setUser(user);
-        expense.setExpenseDate(Instant.now());
+        expense.setExpenseDate(LocalDateTime.now());
         expense.setLocation("New York");
         this.expenseRepository.save(expense);
 
