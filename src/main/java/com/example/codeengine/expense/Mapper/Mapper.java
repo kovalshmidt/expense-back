@@ -4,66 +4,67 @@ import com.example.codeengine.expense.model.Category;
 import com.example.codeengine.expense.model.Expense;
 import com.example.codeengine.expense.model.ExpenseViewModel;
 import com.example.codeengine.expense.repository.CategoryRepository;
-import com.example.codeengine.expense.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
+
 @Component
 public class Mapper {
 
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public Mapper (CategoryRepository categoryRepository){
+    public Mapper(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
+    /**
+     * This method receives an ExpenseViewModel as parameter and converts it to an Expense object
+     */
     public Expense convertToExpenseEntity(ExpenseViewModel expenseViewModel) {
 
+        //Create a new empty Expense object
         Expense expense = new Expense();
 
-        //Convert and set id
+        //Convert and set id to Expense object
         String id = expenseViewModel.getId();
-        if(id != null){
+        if (id != null) {
             UUID uuid = UUID.fromString(id);
             expense.setId(uuid);
         }
 
-        //Convert and set expenseDate
+        //Convert and set expenseDate to Expense object
         String expenseDate = expenseViewModel.getExpenseDate();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //create a formatter for the format that we expect
         LocalDate ld = LocalDate.parse(expenseDate, dateTimeFormatter);
-        LocalDateTime expenseLocal = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());;
+        LocalDateTime expenseLocal = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
         expense.setExpenseDate(expenseLocal);
 
-        //Convert and set category
+        //Convert and set category to Expense object
         String categoryId = expenseViewModel.getCategoryId(); //Get category id from expenseViewModel
         UUID categoryUuid = UUID.fromString(categoryId); //Convert categoryId type string to categoryId type UUID
         Optional<Category> optional = categoryRepository.findById(categoryUuid); //Find category by id in database
-        if(optional.isPresent()){ //If category is present
+        if (optional.isPresent()) { //If category is present
             Category category = optional.get(); //Get category from optional
             expense.setCategory(category); //Set category in expense
         }
 
-        //Set location
+        //Set location to Expense object
         String location = expenseViewModel.getLocation();
         expense.setLocation(location);
 
-        //Set description
+        //Set description to Expense object
         expense.setDescription(expenseViewModel.getDescription());
 
-        //Set user
+        //Set user to Expense object
         expense.setUser(null);
 
+        //Return Expense object with data from ExpenseViewModel
         return expense;
-
-
     }
 }
