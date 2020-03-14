@@ -12,8 +12,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class CategoryController {
     private CategoryRepository categoryRepository;
@@ -29,8 +31,8 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity getCategory(@PathVariable("id") Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
+    public ResponseEntity getCategory(@PathVariable("id") String id) {
+        Optional<Category> category = categoryRepository.findById(UUID.fromString(id));
         return category.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -41,15 +43,15 @@ public class CategoryController {
         return ResponseEntity.created(new URI("/api/category/" + result.getId())).body(result);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/category")
     public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category) {
         Category result = categoryRepository.save(category);
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/category/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-        categoryRepository.deleteById(id);
+    public ResponseEntity<?> deleteCategory(@PathVariable String id) {
+        categoryRepository.deleteById(UUID.fromString(id));
         return ResponseEntity.ok().build();
     }
 }

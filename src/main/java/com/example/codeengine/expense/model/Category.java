@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "category")
@@ -13,7 +14,9 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    private Long id;
+    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue
+    private UUID id;
     //Travel, Grocery
     private String name;
 }

@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "expense")
@@ -19,8 +19,10 @@ import java.time.Instant;
 public class Expense {
 
     @Id
-    private Long id;
-    private Instant expenseDate;
+    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue
+    private UUID id;
+    private LocalDateTime expenseDate;
     private String description;
     private String location;
     @JsonIgnore
