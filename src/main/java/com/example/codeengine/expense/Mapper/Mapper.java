@@ -3,7 +3,9 @@ package com.example.codeengine.expense.Mapper;
 import com.example.codeengine.expense.model.Category;
 import com.example.codeengine.expense.model.Expense;
 import com.example.codeengine.expense.model.ExpenseViewModel;
+import com.example.codeengine.expense.model.User;
 import com.example.codeengine.expense.repository.CategoryRepository;
+import com.example.codeengine.expense.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,12 @@ import java.util.UUID;
 public class Mapper {
 
     private CategoryRepository categoryRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public Mapper(CategoryRepository categoryRepository) {
+    public Mapper(CategoryRepository categoryRepository, UserRepository userRepository) {
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -40,18 +44,22 @@ public class Mapper {
 
         //Convert and set expenseDate to Expense object
         String expenseDate = expenseViewModel.getExpenseDate();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //create a formatter for the format that we expect
-        LocalDate ld = LocalDate.parse(expenseDate, dateTimeFormatter);
-        LocalDateTime expenseLocal = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
-        expense.setExpenseDate(expenseLocal);
+        if (expenseDate != null) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //create a formatter for the format that we expect
+            LocalDate ld = LocalDate.parse(expenseDate, dateTimeFormatter);
+            LocalDateTime expenseLocal = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
+            expense.setExpenseDate(expenseLocal);
+        }
 
         //Convert and set category to Expense object
         String categoryId = expenseViewModel.getCategoryId(); //Get category id from expenseViewModel
-        UUID categoryUuid = UUID.fromString(categoryId); //Convert categoryId type string to categoryId type UUID
-        Optional<Category> optional = categoryRepository.findById(categoryUuid); //Find category by id in database
-        if (optional.isPresent()) { //If category is present
-            Category category = optional.get(); //Get category from optional
-            expense.setCategory(category); //Set category in expense
+        if (categoryId != null) {
+            UUID categoryUUUID = UUID.fromString(categoryId); //Convert categoryId type string to categoryUUID type UUID
+            Optional<Category> optional = categoryRepository.findById(categoryUUUID); //Find category by id in database
+            if (optional.isPresent()) { //If category is present
+                Category category = optional.get(); //Get category from optional
+                expense.setCategory(category); //Set category in expense
+            }
         }
 
         //Set location to Expense object
@@ -62,7 +70,15 @@ public class Mapper {
         expense.setDescription(expenseViewModel.getDescription());
 
         //Set user to Expense object
-        expense.setUser(null);
+        String userId = expenseViewModel.getUserId();
+        if (userId != null) {
+            UUID userUUID = UUID.fromString(userId); //Convert userId type string to userUUID type UUID
+            Optional<User> optional = userRepository.findById(userUUID); //Find user by id in database
+            if (optional.isPresent()) { //If category is present
+                User user = optional.get(); //Get category from optional
+                expense.setUser(user); //Set category in expense
+            }
+        }
 
         //Return Expense object with data from ExpenseViewModel
         return expense;
