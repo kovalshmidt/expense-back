@@ -46,11 +46,11 @@ class MapperTest {
         expenseViewModel.setDescription("This is a description");
 
         //Set Location
-        expenseViewModel.setLocation("Lviv");
+        expenseViewModel.setLocation("Kyiv");
 
         //Set Category
         Category category = new Category(); //Create a Category
-        category.setName("School"); //Assign name to Category
+        category.setName("Univer"); //Assign name to Category
         category = categoryRepository.save(category); //Save the category to Database and get in return the same category but with UUID assigned
         String categoryId = category.getId().toString(); //Get Category id as String
         expenseViewModel.setCategoryId(categoryId);
@@ -62,7 +62,7 @@ class MapperTest {
 
         //Set User
         User user = new User(); //Create a User
-        user.setName("Pavlo"); //Assign a name to the User
+        user.setName("Miha"); //Assign a name to the User
         user.setEmail("pavlo@pavlo.com"); //Assign email to the User
         user = userRepository.save(user); //Save the user to Database and get in return the same user but with UUID assigned
         String userId = user.getId().toString(); //Get User id as String
