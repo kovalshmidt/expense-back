@@ -34,7 +34,7 @@ class MapperTest {
     }
 
     @Test
-    void testConvertToExpenseViewModel() {
+    void testConvertToExpenseEntity() {
         //Create ExpenseViewModel to populate it with data
         ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 
