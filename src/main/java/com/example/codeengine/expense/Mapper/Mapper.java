@@ -83,4 +83,20 @@ public class Mapper {
         //Return Expense object with data from ExpenseViewModel
         return expense;
     }
+    //In Mapper class create a method that receives an Expense object as parameter, converts it and returns an ExpenseViewModel.
+    public ExpenseViewModel  convertToExpense(Expense expense){
+
+        ExpenseViewModel expenseViewModel = new ExpenseViewModel();
+
+        //convert ExpenseViewModel
+        expenseViewModel.setCategoryId(expense.getCategory().getId().toString());
+        expenseViewModel.setDescription(expense.getDescription());
+        expenseViewModel.setExpenseDate(expense.getExpenseDate().toString());
+        expenseViewModel.setId(expense.getId().toString());
+        expenseViewModel.setLocation(expense.getLocation());
+        expenseViewModel.setUserId(expense.getUser().getId().toString());
+
+        return expenseViewModel;
+    }
+
 }
