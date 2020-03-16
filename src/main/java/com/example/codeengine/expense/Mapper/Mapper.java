@@ -84,17 +84,45 @@ public class Mapper {
         return expense;
     }
     //In Mapper class create a method that receives an Expense object as parameter, converts it and returns an ExpenseViewModel.
-    public ExpenseViewModel  convertToExpense(Expense expense){
+    public ExpenseViewModel  convertToExpenseViewModel(Expense expense){
 
         ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 
-        //convert ExpenseViewModel
-        expenseViewModel.setCategoryId(expense.getCategory().getId().toString());
+        //Get category from expense
+        Category category = expense.getCategory();
+        //Check that category is not null
+        if (category != null){
+            //Get category id
+            UUID id = category.getId();
+            //Convert id from UUID to String
+            String categoryId = id.toString();
+            //Set categoryId in expenseViewModel
+            expenseViewModel.setCategoryId(categoryId);
+        }
+
+        //Set description
         expenseViewModel.setDescription(expense.getDescription());
-        expenseViewModel.setExpenseDate(expense.getExpenseDate().toString());
-        expenseViewModel.setId(expense.getId().toString());
+
+        //Set expenseDate
+        LocalDateTime expenseDate = expense.getExpenseDate();
+        if (expenseDate != null){
+            expenseViewModel.setExpenseDate(expenseDate.toString());
+        }
+
+        //Set id
+        UUID id = expense.getId();
+        if (id != null){
+            expenseViewModel.setId(id.toString());
+        }
+
+        //Set Location
         expenseViewModel.setLocation(expense.getLocation());
-        expenseViewModel.setUserId(expense.getUser().getId().toString());
+
+        //Set user
+        User user = expense.getUser();
+        if (user != null){
+            expenseViewModel.setUserId(user.getId().toString());
+        }
 
         return expenseViewModel;
     }
