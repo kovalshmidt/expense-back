@@ -1,6 +1,6 @@
 package com.example.codeengine.expense.controller;
 
-import com.example.codeengine.expense.Mapper.Mapper;
+import com.example.codeengine.expense.mapper.Mapper;
 import com.example.codeengine.expense.model.Expense;
 import com.example.codeengine.expense.model.ExpenseViewModel;
 import com.example.codeengine.expense.repository.ExpenseRepository;

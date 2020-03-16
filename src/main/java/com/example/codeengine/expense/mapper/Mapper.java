@@ -1,4 +1,4 @@
-package com.example.codeengine.expense.Mapper;
+package com.example.codeengine.expense.mapper;
 
 import com.example.codeengine.expense.model.Category;
 import com.example.codeengine.expense.model.Expense;
@@ -83,7 +83,10 @@ public class Mapper {
         //Return Expense object with data from ExpenseViewModel
         return expense;
     }
-    //In Mapper class create a method that receives an Expense object as parameter, converts it and returns an ExpenseViewModel.
+
+    /**
+     * In Mapper class create a method that receives an Expense object as parameter, converts it and returns an ExpenseViewModel.
+     */
     public ExpenseViewModel  convertToExpenseViewModel(Expense expense){
 
         ExpenseViewModel expenseViewModel = new ExpenseViewModel();

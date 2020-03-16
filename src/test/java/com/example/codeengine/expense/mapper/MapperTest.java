@@ -1,4 +1,4 @@
-package com.example.codeengine.expense.Mapper;
+package com.example.codeengine.expense.mapper;
 
 import com.example.codeengine.expense.model.Category;
 import com.example.codeengine.expense.model.Expense;
