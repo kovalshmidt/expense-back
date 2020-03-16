@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  */
 
 @Component
-@ConditionalOnProperty(name = "noteit.db.recreate", havingValue = "true")
+@ConditionalOnProperty(name = "expense.db.populate", havingValue = "true")
 public class DBSeeder implements CommandLineRunner {
     private UserRepository userRepository;
     private CategoryRepository categoryRepository;
@@ -36,28 +36,25 @@ public class DBSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
         // Remove all existing users
         this.userRepository.deleteAll();
-
         // Save a admin user
         User user = new User();
         user.setEmail("admin@admin.com");
         user.setName("admin");
         this.userRepository.save(user);
 
-
         // Remove all existing categories
         this.categoryRepository.deleteAll();
-
-        // Save a admin user
+        // Save the category
         Category category = new Category();
         category.setName("Travel");
         this.categoryRepository.save(category);
 
         // Remove all existing expenses
         this.expenseRepository.deleteAll();
-
-        // Save a admin user
+        // Save a the Expense
         Expense expense = new Expense();
         expense.setCategory(category);
         expense.setDescription("New York Business trip");
@@ -65,7 +62,6 @@ public class DBSeeder implements CommandLineRunner {
         expense.setExpenseDate(LocalDateTime.now());
         expense.setLocation("New York");
         this.expenseRepository.save(expense);
-
 
         System.out.println("Initialized database");
     }
