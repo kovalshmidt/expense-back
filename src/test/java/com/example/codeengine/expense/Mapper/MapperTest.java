@@ -92,6 +92,62 @@ class MapperTest {
         softAssertions.assertThat(user_Id).isEqualTo(expenseViewModel.getUserId());
         softAssertions.assertThat(user_Id).isNotEqualTo(null);
     }
+    @Test
+    void testConvertToExpenseViewModel(){
+
+        Expense expense = new Expense();
+
+        String id = UUID.randomUUID().toString();
+        expense.setId(UUID.randomUUID());
+
+
+        expense.setDescription("discription");
+
+        expense.setLocation("NY");
+
+        Category category = new Category();
+        category.setName("School");
+        category = categoryRepository.save(category);
+        expense.setCategory(category);
+
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        expense.setExpenseDate(LocalDateTime.now());
+
+
+
+        User user = new User();
+        user.setName("vasya");
+        user = userRepository.save(user);
+        user.setEmail("petro@pavlo.com"); //Assign email to the User
+        user = userRepository.save(user); //Save the user to Database and get in return the same user but with UUID assigned
+        expense.setUser(user);
+
+
+
+
+        String description = expense.getDescription();
+        softAssertions.assertThat(description).isEqualTo(expense.getDescription());
+        softAssertions.assertThat(description).isNotEqualTo(null);
+
+        String expenseId = expense.getId().toString();
+        softAssertions.assertThat(expenseId).isEqualTo(expense.getId());
+        softAssertions.assertThat(expenseId).isNotEqualTo(null);
+
+        String location = expense.getLocation();
+        softAssertions.assertThat(location).isEqualTo(expense.getLocation());
+        softAssertions.assertThat(location).isNotEqualTo(null);
+
+        String category_Id = expense.getCategory().getId().toString();
+        softAssertions.assertThat(category_Id).isEqualTo(expense.getCategory());
+        softAssertions.assertThat(category_Id).isNotEqualTo(null);
+
+        String user_Id = expense.getUser().getId().toString();
+        softAssertions.assertThat(user_Id).isEqualTo(expense.getUser());
+        softAssertions.assertThat(user_Id).isNotEqualTo(null);
+          }
 
     @AfterAll
     static void afterAll() {
