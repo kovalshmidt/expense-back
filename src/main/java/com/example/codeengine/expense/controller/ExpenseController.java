@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -30,8 +31,9 @@ public class ExpenseController {
     }
 
     @GetMapping("/expenses")
-    public Collection<Expense> expenses() {
-        return expenseRepository.findAll();
+    public Collection<ExpenseViewModel> expenses() {
+        Collection<Expense> expenses = this.expenseRepository.findAll();
+        return expenses.stream().map(expense -> this.mapper.convertToExpenseViewModel(expense)).collect(Collectors.toList());
     }
 
     @GetMapping("/expense/{id}")
