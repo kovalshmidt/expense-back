@@ -16,18 +16,18 @@ import java.time.LocalDateTime;
 
 /**
  * This component will only execute (and get instantiated) if the
- * property noteit.db.recreate is set to true in the
+ * property expense.db.populate is set to true in the
  * application.properties file
  */
 
 @Component
 @ConditionalOnProperty(name = "expense.db.populate", havingValue = "true")
-public class DBSeeder implements CommandLineRunner {
+public class DBFiller implements CommandLineRunner {
     private UserRepository userRepository;
     private CategoryRepository categoryRepository;
     private ExpenseRepository expenseRepository;
 
-    public DBSeeder(UserRepository userRepository, CategoryRepository categoryRepository, ExpenseRepository expenseRepository) {
+    public DBFiller(UserRepository userRepository, CategoryRepository categoryRepository, ExpenseRepository expenseRepository) {
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.expenseRepository = expenseRepository;
