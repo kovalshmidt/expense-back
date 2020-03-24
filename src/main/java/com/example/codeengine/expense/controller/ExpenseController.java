@@ -1,6 +1,7 @@
 package com.example.codeengine.expense.controller;
 
 import com.example.codeengine.expense.Mapper.Mapper;
+import com.example.codeengine.expense.Mapper.Mapper;
 import com.example.codeengine.expense.model.Expense;
 import com.example.codeengine.expense.model.ExpenseViewModel;
 import com.example.codeengine.expense.repository.ExpenseRepository;
@@ -15,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -30,8 +32,9 @@ public class ExpenseController {
     }
 
     @GetMapping("/expenses")
-    public Collection<Expense> expenses() {
-        return expenseRepository.findAll();
+    public Collection<ExpenseViewModel> expenses() {
+        Collection<Expense> expenses = this.expenseRepository.findAll();
+        return expenses.stream().map(expense -> this.mapper.convertToExpenseViewModel(expense)).collect(Collectors.toList());
     }
 
     @GetMapping("/expense/{id}")
@@ -42,10 +45,14 @@ public class ExpenseController {
     }
 
     @PostMapping("/expense")
-    public ResponseEntity<Expense> expense(@Valid @RequestBody ExpenseViewModel expenseViewModel) throws URISyntaxException {
+    public ResponseEntity<ExpenseViewModel> expense(@Valid @RequestBody ExpenseViewModel expenseViewModel) throws URISyntaxException {
+        //Convert ExpenseViewModel to Expense
         Expense expense = mapper.convertToExpenseEntity(expenseViewModel);
-        Expense result = expenseRepository.save(expense);
-        return ResponseEntity.created(new URI("/api/expenses/" + result.getId())).body(result);
+        //Save Expense in Database
+        Expense expenseWithId = expenseRepository.save(expense);
+        //Convert Expense to ExpenseViewModel
+        ExpenseViewModel expenseViewModel1 = mapper.convertToExpenseViewModel(expenseWithId);
+        return ResponseEntity.created(new URI("/api/expenses/" + expenseViewModel1.getId())).body(expenseViewModel1);
     }
 
     @PutMapping("/expense")

@@ -18,8 +18,8 @@ import java.util.UUID;
 @Component
 public class Mapper {
 
-    private CategoryRepository categoryRepository;
-    private UserRepository userRepository;
+    private static CategoryRepository categoryRepository;
+    private static UserRepository userRepository;
 
     @Autowired
     public Mapper(CategoryRepository categoryRepository, UserRepository userRepository) {
@@ -30,7 +30,7 @@ public class Mapper {
     /**
      * This method receives an ExpenseViewModel as parameter and converts it to an Expense object
      */
-    public Expense convertToExpenseEntity(ExpenseViewModel expenseViewModel) {
+    public static Expense convertToExpenseEntity(ExpenseViewModel expenseViewModel) {
 
         //Create a new empty Expense object
         Expense expense = new Expense();
@@ -83,7 +83,7 @@ public class Mapper {
         //Return Expense object with data from ExpenseViewModel
         return expense;
     }
-    //In Mapper class create a method that receives an Expense object as parameter, converts it and returns an ExpenseViewModel.
+
     public ExpenseViewModel  convertToExpense(Expense expense){
 
         ExpenseViewModel expenseViewModel = new ExpenseViewModel();
@@ -98,4 +98,52 @@ public class Mapper {
 
         return expenseViewModel;
     }
+
+
+    /**
+     * In Mapper class create a method that receives an Expense object as parameter, converts it and returns an ExpenseViewModel.
+     */
+    public ExpenseViewModel  convertToExpenseViewModel(Expense expense){
+
+        ExpenseViewModel expenseViewModel = new ExpenseViewModel();
+
+        //Get category from expense
+        Category category = expense.getCategory();
+        //Check that category is not null
+        if (category != null){
+            //Get category id
+            UUID id = category.getId();
+            //Convert id from UUID to String
+            String categoryId = id.toString();
+            //Set categoryId in expenseViewModel
+            expenseViewModel.setCategoryId(categoryId);
+        }
+
+        //Set description
+        expenseViewModel.setDescription(expense.getDescription());
+
+        //Set expenseDate
+        LocalDateTime expenseDate = expense.getExpenseDate();
+        if (expenseDate != null){
+            expenseViewModel.setExpenseDate(expenseDate.toString());
+        }
+
+        //Set id
+        UUID id = expense.getId();
+        if (id != null){
+            expenseViewModel.setId(id.toString());
+        }
+
+        //Set Location
+        expenseViewModel.setLocation(expense.getLocation());
+
+        //Set user
+        User user = expense.getUser();
+        if (user != null){
+            expenseViewModel.setUserId(user.getId().toString());
+        }
+
+        return expenseViewModel;
+    }
+
 }

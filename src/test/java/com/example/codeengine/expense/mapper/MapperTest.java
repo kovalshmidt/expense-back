@@ -1,5 +1,6 @@
 package com.example.codeengine.expense.Mapper;
 
+import com.example.codeengine.expense.Mapper.Mapper;
 import com.example.codeengine.expense.model.Category;
 import com.example.codeengine.expense.model.Expense;
 import com.example.codeengine.expense.model.ExpenseViewModel;
@@ -69,7 +70,7 @@ class MapperTest {
         expenseViewModel.setUserId(userId);
 
         //Convert populated ExpenseViewModel to Expense
-        Expense expense = mapper.convertToExpenseEntity(expenseViewModel);
+        Expense expense = Mapper.convertToExpenseEntity(expenseViewModel);
 
         //Check Description
         String description = expense.getDescription();
@@ -91,6 +92,61 @@ class MapperTest {
         String user_Id = expense.getUser().getId().toString();
         softAssertions.assertThat(user_Id).isEqualTo(expenseViewModel.getUserId());
         softAssertions.assertThat(user_Id).isNotEqualTo(null);
+    }
+    @Test
+    void   convertToExpenseViewModel(){
+        Expense expense = new Expense();
+        //set id to Expense
+        UUID id = UUID.randomUUID();
+        expense.setId(id);
+
+        //set description to expense
+        expense.setDescription("desk");
+
+        //set location to expense
+        expense.setLocation("location");
+
+        //set Category to Expense
+        Category category = new Category();//create category
+        category.setName("category");//set name to category
+        category =categoryRepository.save(category);
+        expense.setCategory(category);
+
+        //set ExpenseDate to Expense
+
+        expense.setExpenseDate(LocalDateTime.now());
+
+        //Set user
+        User user = new User();
+        user.setName("kolya");//set name to Expense
+        user.setEmail("gooogle@eamil.com");//set email to Expense
+        user = userRepository.save(user);
+        expense.setUser(user);
+
+        ExpenseViewModel expenseViewModel = mapper.convertToExpenseViewModel(expense);
+
+
+        //Check Description
+        String description = expense.getDescription();
+        softAssertions.assertThat(description).isEqualTo(expense.getDescription());
+        softAssertions.assertThat(description).isNotEqualTo(null);
+        //Check Id
+        String expenseId = expense.getId().toString();
+        softAssertions.assertThat(expenseId).isEqualTo(expense.getId());
+        softAssertions.assertThat(expenseId).isNotEqualTo(null);
+        //Check Location
+        String location = expense.getLocation();
+        softAssertions.assertThat(location).isEqualTo(expense.getLocation());
+        softAssertions.assertThat(location).isNotEqualTo(null);
+        //Check Category Id
+        String category_Id = expense.getCategory().getId().toString();
+        softAssertions.assertThat(category_Id).isEqualTo(expense.getCategory());
+        softAssertions.assertThat(category_Id).isNotEqualTo(null);
+        //Check User Id
+        String user_Id = expense.getUser().getId().toString();
+        softAssertions.assertThat(user_Id).isEqualTo(expense.getUser());
+        softAssertions.assertThat(user_Id).isNotEqualTo(null);
+
     }
 
     @AfterAll

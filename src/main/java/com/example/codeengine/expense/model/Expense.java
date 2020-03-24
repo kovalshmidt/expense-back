@@ -1,9 +1,7 @@
 package com.example.codeengine.expense.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -13,7 +11,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "expense")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Expense {
