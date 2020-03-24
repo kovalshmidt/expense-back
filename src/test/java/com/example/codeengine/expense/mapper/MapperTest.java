@@ -122,6 +122,7 @@ class MapperTest {
         user = userRepository.save(user);
         expense.setUser(user);
 
+        //Convert populated Expense to ExpenseViewModel
         ExpenseViewModel expenseViewModel = mapper.convertToExpenseViewModel(expense);
 
         //Check Description
