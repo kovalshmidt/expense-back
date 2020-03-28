@@ -125,26 +125,26 @@ class MapperTest {
         //Convert populated Expense to ExpenseViewModel
         ExpenseViewModel expenseViewModel = mapper.convertToExpenseViewModel(expense);
 
-        //Check Description
-        String description = expenseViewModel.getDescription();
-        softAssertions.assertThat(description).isEqualTo(expense.getDescription());
-        softAssertions.assertThat(description).isNotEqualTo(null);
-        //Check Id
-        String expenseId = expenseViewModel.getId();
-        softAssertions.assertThat(expenseId).isEqualTo(expense.getId());
-        softAssertions.assertThat(expenseId).isNotEqualTo(null);
-        //Check Location
-        String location = expenseViewModel.getLocation();
-        softAssertions.assertThat(location).isEqualTo(expense.getLocation());
-        softAssertions.assertThat(location).isNotEqualTo(null);
-        //Check Category Id
-        String category_Id = expenseViewModel.getCategoryId();
-        softAssertions.assertThat(category_Id).isEqualTo(expense.getCategory());
-        softAssertions.assertThat(category_Id).isNotEqualTo(null);
-        //Check User Id
-        String user_Id = expenseViewModel.getUserId();
-        softAssertions.assertThat(user_Id).isEqualTo(expense.getUser());
-        softAssertions.assertThat(user_Id).isNotEqualTo(null);
+        //Check Description(done)
+        String description = expenseViewModel.getDescription();//I get a Description in expenseViewModel
+        softAssertions.assertThat(description).isEqualTo(expense.getDescription());//I said description=expenseViewModel.getDescription
+        softAssertions.assertThat(description).isNotEqualTo(null);//Description is do not stick to zero
+        //Check ID
+        String expenseId = expenseViewModel.getId();//I get a expenseId in expenseViewModel
+        softAssertions.assertThat(expenseId).isEqualTo(expense.getId().toString());//I said expenseId=expenseViewModel.expenseViewModel.getId
+        softAssertions.assertThat(expenseId).isNotEqualTo(null);//ExpenseId do not stick to zero
+        //Check Location(done)
+        String location = expenseViewModel.getLocation();//I get a location in expenseViewModel
+        softAssertions.assertThat(location).isEqualTo(expense.getLocation());//I said location=expenseViewModel.getLocation
+        softAssertions.assertThat(location).isNotEqualTo(null);//Location do not stick to zero
+        //Check Category
+        String categoryId = expenseViewModel.getCategoryId();//I get a categoryId in expenseViewModel
+        softAssertions.assertThat(categoryId).isEqualTo(expense.getCategory().getId().toString());//I said categoryId=expenseViewModel.CategoryId
+        softAssertions.assertThat(categoryId).isNotEqualTo(null);//CategoryId do not stick to zero
+        //Check User
+        String userId = expenseViewModel.getUserId();//I get a userId in expenseViewModel
+        softAssertions.assertThat(userId).isEqualTo(expense.getUser().getId().toString());//I said userId=expenseViewModel.getUser
+        softAssertions.assertThat(userId).isNotEqualTo(null);//UserId do not stick to zero
     }
 
     @AfterAll
