@@ -126,25 +126,25 @@ class MapperTest {
         ExpenseViewModel expenseViewModel = mapper.convertToExpenseViewModel(expense);
 
         //Check Description(done)
-        String description = expenseViewModel.getDescription();//I get a Description in expenseViewModel
-        softAssertions.assertThat(description).isEqualTo(expense.getDescription());//I said description=expenseViewModel.getDescription
-        softAssertions.assertThat(description).isNotEqualTo(null);//Description is do not stick to zero
+        String description = expenseViewModel.getDescription();//Extract description from ExpenseViewModel
+        softAssertions.assertThat(description).isEqualTo(expense.getDescription());//Check that description from ExpenseViewModel equals to the one in Expense
+        softAssertions.assertThat(description).isNotEqualTo(null);//Check that description is not null
         //Check ID
-        String expenseId = expenseViewModel.getId();//I get a expenseId in expenseViewModel
-        softAssertions.assertThat(expenseId).isEqualTo(expense.getId().toString());//I said expenseId=expenseViewModel.expenseViewModel.getId
-        softAssertions.assertThat(expenseId).isNotEqualTo(null);//ExpenseId do not stick to zero
+        String expenseId = expenseViewModel.getId();///Extract expenseId from ExpenseViewModel
+        softAssertions.assertThat(expenseId).isEqualTo(expense.getId().toString());//Check that description from ExpenseViewModel equals to the one in Expense, since types are different convert the id in Expense to String
+        softAssertions.assertThat(expenseId).isNotEqualTo(null);//Check that description is not null
         //Check Location(done)
-        String location = expenseViewModel.getLocation();//I get a location in expenseViewModel
-        softAssertions.assertThat(location).isEqualTo(expense.getLocation());//I said location=expenseViewModel.getLocation
-        softAssertions.assertThat(location).isNotEqualTo(null);//Location do not stick to zero
+        String location = expenseViewModel.getLocation();//Extract location from ExpenseViewModel
+        softAssertions.assertThat(location).isEqualTo(expense.getLocation());//Check that location from ExpenseViewModel equals to the one in Expense
+        softAssertions.assertThat(location).isNotEqualTo(null);//Check that location is not null
         //Check Category
-        String categoryId = expenseViewModel.getCategoryId();//I get a categoryId in expenseViewModel
-        softAssertions.assertThat(categoryId).isEqualTo(expense.getCategory().getId().toString());//I said categoryId=expenseViewModel.CategoryId
-        softAssertions.assertThat(categoryId).isNotEqualTo(null);//CategoryId do not stick to zero
+        String categoryId = expenseViewModel.getCategoryId();//Extract categoryId from ExpenseViewModel
+        softAssertions.assertThat(categoryId).isEqualTo(expense.getCategory().getId().toString());//Check that categoryId from ExpenseViewModel is equal to the Category id that is in Expense, since types are different convert the id in Category to String
+        softAssertions.assertThat(categoryId).isNotEqualTo(null);//Check that categoryId is not null
         //Check User
-        String userId = expenseViewModel.getUserId();//I get a userId in expenseViewModel
-        softAssertions.assertThat(userId).isEqualTo(expense.getUser().getId().toString());//I said userId=expenseViewModel.getUser
-        softAssertions.assertThat(userId).isNotEqualTo(null);//UserId do not stick to zero
+        String userId = expenseViewModel.getUserId();//Extract userId from ExpenseViewModel
+        softAssertions.assertThat(userId).isEqualTo(expense.getUser().getId().toString());//Check that userId from ExpenseViewModel is equal to the User id that is in Expense, since types are different convert the id in User to String
+        softAssertions.assertThat(userId).isNotEqualTo(null);//Check that userId is not null
     }
 
     @AfterAll
