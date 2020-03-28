@@ -93,6 +93,60 @@ class MapperTest {
         softAssertions.assertThat(user_Id).isNotEqualTo(null);
     }
 
+    @Test
+    void convertToExpenseViewModel() {
+        Expense expense = new Expense();
+        //set id to Expense
+        UUID id = UUID.randomUUID();
+        expense.setId(id);
+
+        //set description to expense
+        expense.setDescription("desk");
+
+        //set location to expense
+        expense.setLocation("location");
+
+        //set Category to Expense
+        Category category = new Category();//create category
+        category.setName("category");//set name to category
+        category = categoryRepository.save(category);
+        expense.setCategory(category);
+
+        //set ExpenseDate to Expense
+        expense.setExpenseDate(LocalDateTime.now());
+
+        //Set user
+        User user = new User();
+        user.setName("kolya");//set name to Expense
+        user.setEmail("gooogle@eamil.com");//set email to Expense
+        user = userRepository.save(user);
+        expense.setUser(user);
+
+        //Convert populated Expense to ExpenseViewModel
+        ExpenseViewModel expenseViewModel = mapper.convertToExpenseViewModel(expense);
+
+        //Check Description(done)
+        String description = expenseViewModel.getDescription();//I get a Description in expenseViewModel
+        softAssertions.assertThat(description).isEqualTo(expense.getDescription());//I said description=expenseViewModel.getDescription
+        softAssertions.assertThat(description).isNotEqualTo(null);//Description is do not stick to zero
+        //Check ID
+        String expenseId = expenseViewModel.getId();//I get a expenseId in expenseViewModel
+        softAssertions.assertThat(expenseId).isEqualTo(expense.getId().toString());//I said expenseId=expenseViewModel.expenseViewModel.getId
+        softAssertions.assertThat(expenseId).isNotEqualTo(null);//ExpenseId do not stick to zero
+        //Check Location(done)
+        String location = expenseViewModel.getLocation();//I get a location in expenseViewModel
+        softAssertions.assertThat(location).isEqualTo(expense.getLocation());//I said location=expenseViewModel.getLocation
+        softAssertions.assertThat(location).isNotEqualTo(null);//Location do not stick to zero
+        //Check Category
+        String categoryId = expenseViewModel.getCategoryId();//I get a categoryId in expenseViewModel
+        softAssertions.assertThat(categoryId).isEqualTo(expense.getCategory().getId().toString());//I said categoryId=expenseViewModel.CategoryId
+        softAssertions.assertThat(categoryId).isNotEqualTo(null);//CategoryId do not stick to zero
+        //Check User
+        String userId = expenseViewModel.getUserId();//I get a userId in expenseViewModel
+        softAssertions.assertThat(userId).isEqualTo(expense.getUser().getId().toString());//I said userId=expenseViewModel.getUser
+        softAssertions.assertThat(userId).isNotEqualTo(null);//UserId do not stick to zero
+    }
+
     @AfterAll
     static void afterAll() {
         softAssertions.assertAll();
