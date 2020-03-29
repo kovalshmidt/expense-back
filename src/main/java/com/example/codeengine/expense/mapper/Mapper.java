@@ -45,6 +45,7 @@ public class Mapper {
         //Convert and set expenseDate to Expense object
         String expenseDate = expenseViewModel.getExpenseDate();
         if (expenseDate != null) {
+            expenseDate = expenseDate.substring(0, 10);
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //create a formatter for the format that we expect
             LocalDate ld = LocalDate.parse(expenseDate, dateTimeFormatter);
             LocalDateTime expenseLocal = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());

@@ -55,9 +55,14 @@ public class ExpenseController {
     }
 
     @PutMapping("/expense")
-    public ResponseEntity<Expense> updateExpense(@Valid @RequestBody Expense expense) {
-        Expense result = expenseRepository.save(expense);
-        return ResponseEntity.ok().body(result);
+    public ResponseEntity<ExpenseViewModel> updateExpense(@Valid @RequestBody ExpenseViewModel expenseView) {
+        //Convert ExpenseViewModel to Expense
+        Expense expense = mapper.convertToExpenseEntity(expenseView);
+        //Save Expense in Database
+        Expense expenseFromDB = expenseRepository.save(expense);
+        //Convert Expense to ExpenseViewModel
+        ExpenseViewModel expenseViewModel = this.mapper.convertToExpenseViewModel(expenseFromDB);
+        return ResponseEntity.ok().body(expenseViewModel);
     }
 
     @DeleteMapping("/expense/{id}")
