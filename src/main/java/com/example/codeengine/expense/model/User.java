@@ -23,6 +23,7 @@ public class User {
     private String email;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Expense> expenses;
+    private String password;
 
     public User() {
         this.expenses = new ArrayList<>();
