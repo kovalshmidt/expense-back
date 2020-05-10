@@ -26,7 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
         //get optional with user from database by username (email)
         //optional can hold the object specified in < > or null
-        Optional<User> optionalUser = userRepository.findUserByEmail(userName);
+        Optional<User> optionalUser = userRepository.findByEmail(userName);
 
         //check if optional has value
         if (optionalUser.isPresent()) {
