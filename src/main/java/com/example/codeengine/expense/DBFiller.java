@@ -43,6 +43,7 @@ public class DBFiller implements CommandLineRunner {
         User user = new User();
         user.setEmail("admin@admin.com");
         user.setName("admin");
+        user.setPassword("admin");
         this.userRepository.save(user);
 
         // Remove all existing categories
