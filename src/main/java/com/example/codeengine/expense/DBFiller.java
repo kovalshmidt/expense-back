@@ -39,11 +39,21 @@ public class DBFiller implements CommandLineRunner {
 
         // Remove all existing users
         this.userRepository.deleteAll();
-        // Save a admin user
+
+        // Save admin
+        User admin = new User();
+        admin.setEmail("admin@admin.com");
+        admin.setName("admin");
+        admin.setPassword("$2a$10$14uiHgKr.TlXHNU0.8Wshu2dEwDVWfTx94MIpzsgMSAwSCeHp4fDK"); //admin
+        admin.setRoles("ADMIN");
+        this.userRepository.save(admin);
+
+        // Save user
         User user = new User();
-        user.setEmail("admin@admin.com");
-        user.setName("admin");
-        user.setPassword("admin");
+        user.setEmail("user@user.com");
+        user.setName("user");
+        user.setPassword("$2a$10$14uiHgKr.TlXHNU0.8Wshu2dEwDVWfTx94MIpzsgMSAwSCeHp4fDK"); //admin
+        user.setRoles("USER");
         this.userRepository.save(user);
 
         // Remove all existing categories
