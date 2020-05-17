@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/api/expense")
 public class ExpenseController {
     private ExpenseRepository expenseRepository;
     private Mapper mapper;
@@ -30,20 +30,20 @@ public class ExpenseController {
         this.mapper = mapper;
     }
 
-    @GetMapping("/expenses")
+    @GetMapping("/all")
     public Collection<ExpenseViewModel> expenses() {
         Collection<Expense> expenses = this.expenseRepository.findAll();
         return expenses.stream().map(expense -> this.mapper.convertToExpenseViewModel(expense)).collect(Collectors.toList());
     }
 
-    @GetMapping("/expense/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity getExpense(@PathVariable("id") String id) {
         Optional<Expense> expense = expenseRepository.findById(UUID.fromString(id));
         return expense.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/expense")
+    @PostMapping("/save")
     public ResponseEntity<ExpenseViewModel> expense(@Valid @RequestBody ExpenseViewModel expenseViewModel) throws URISyntaxException {
         //Convert ExpenseViewModel to Expense
         Expense expense = mapper.convertToExpenseEntity(expenseViewModel);
@@ -54,7 +54,7 @@ public class ExpenseController {
         return ResponseEntity.created(new URI("/api/expenses/" + expenseViewModel1.getId())).body(expenseViewModel1);
     }
 
-    @PutMapping("/expense")
+    @PutMapping("/update")
     public ResponseEntity<ExpenseViewModel> updateExpense(@Valid @RequestBody ExpenseViewModel expenseView) {
         //Convert ExpenseViewModel to Expense
         Expense expense = mapper.convertToExpenseEntity(expenseView);
@@ -65,7 +65,7 @@ public class ExpenseController {
         return ResponseEntity.ok().body(expenseViewModel);
     }
 
-    @DeleteMapping("/expense/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteExpense(@PathVariable String id) {
         expenseRepository.deleteById(UUID.fromString(id));
         return ResponseEntity.ok().build();
