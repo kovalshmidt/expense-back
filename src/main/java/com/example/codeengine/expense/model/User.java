@@ -24,6 +24,7 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Expense> expenses;
     private String password;
+    private String roles;
 
     public User() {
         this.expenses = new ArrayList<>();
