@@ -52,7 +52,7 @@ public class DBFiller implements CommandLineRunner {
         User user = new User();
         user.setEmail("user@user.com");
         user.setName("user");
-        user.setPassword("$2a$10$14uiHgKr.TlXHNU0.8Wshu2dEwDVWfTx94MIpzsgMSAwSCeHp4fDK"); //admin
+        user.setPassword("$2a$10$/26qSP4mTf38fHdS1xsnd.bkBSk7CjRjUCxNwX6OBY6btQ6j9pKbS"); //user
         user.setRoles("USER");
         this.userRepository.save(user);
 

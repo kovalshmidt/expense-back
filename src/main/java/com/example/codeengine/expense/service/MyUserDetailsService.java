@@ -41,7 +41,7 @@ public class MyUserDetailsService implements UserDetailsService {
                     email, password, getGrantedAuthorities(roles)
             );
         }
-        throw new UsernameNotFoundException("user with username :" + userName + " not found");
+        throw new UsernameNotFoundException("Such user does not exist");
 
     }
 

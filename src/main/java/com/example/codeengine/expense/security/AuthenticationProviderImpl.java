@@ -32,15 +32,12 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
         UserDetails user = userDetailsService.loadUserByUsername(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
         String password = authentication.getCredentials().toString();
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new BadCredentialsException("Bad credentials");
+            throw new BadCredentialsException("Wrong password");
         }
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-        return new UsernamePasswordAuthenticationToken(user, null, authorities);
+        return new UsernamePasswordAuthenticationToken(user, password, authorities);
     }
 
     @Override

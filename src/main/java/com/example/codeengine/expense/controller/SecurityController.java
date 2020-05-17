@@ -30,13 +30,12 @@ public class SecurityController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest request) throws Exception {
         try {
+            // Call authenticate method, to check if the credentials are valid (username password)
             securityConfigurer.authenticationManagerBean().authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
-        } catch (BadCredentialsException e) {
-            throw new Exception("Incorrec  password", e);
-        } catch (UsernameNotFoundException e) {
-            throw new Exception("No such user is present", e);
+        } catch (BadCredentialsException | UsernameNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
