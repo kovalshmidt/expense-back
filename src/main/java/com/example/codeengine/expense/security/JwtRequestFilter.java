@@ -1,4 +1,4 @@
-package com.example.codeengine.expense.filters;
+package com.example.codeengine.expense.security;
 
 import com.example.codeengine.expense.service.MyUserDetailsService;
 import com.example.codeengine.expense.utility.JwtUtility;

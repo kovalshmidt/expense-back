@@ -1,7 +1,7 @@
 package com.example.codeengine.expense.config;
 
-import com.example.codeengine.expense.filters.AuthenticationProviderImpl;
-import com.example.codeengine.expense.filters.JwtRequestFilter;
+import com.example.codeengine.expense.security.AuthenticationProviderImpl;
+import com.example.codeengine.expense.security.JwtRequestFilter;
 import com.example.codeengine.expense.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
