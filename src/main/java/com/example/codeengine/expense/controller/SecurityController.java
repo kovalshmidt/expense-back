@@ -5,6 +5,7 @@ import com.example.codeengine.expense.model.AuthenticationRequest;
 import com.example.codeengine.expense.model.AuthenticationResponse;
 import com.example.codeengine.expense.service.MyUserDetailsService;
 import com.example.codeengine.expense.utility.JwtUtility;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +36,7 @@ public class SecurityController {
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
         } catch (BadCredentialsException | UsernameNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
